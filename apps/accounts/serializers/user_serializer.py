@@ -14,3 +14,12 @@ class RegisterSerializer(serializers.Serializer):
         required=True,
         min_length=8
     )
+
+class LoginSerializer(serializers.Serializer):
+
+    email = serializers.EmailField(required=True)
+
+    password = serializers.CharField(
+        required=True,
+        min_length=8
+    )    
