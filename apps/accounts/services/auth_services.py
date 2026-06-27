@@ -1,10 +1,12 @@
 from apps.accounts.models import User
 from apps.accounts.repository.user_repository import UserRepository
 from apps.accounts.exceptions import UserAlreadyExistsException
+from core.ports.jwt_port import jwt_port
 class AuthService():
-    def __init__(self,  user_repository,email_port):
+    def __init__(self,  user_repository,email_port, jwt_port):
         self.user_repository = user_repository
         self.email_port = email_port
+        self.jwt_port = jwt_port
 
 
     def register_user(self, username: str, email: str, password: str):
@@ -30,10 +32,11 @@ class AuthService():
             raise Exception("User does not exist")
         if not user.check_password(password):
             raise Exception("Invalid password")
+        tokens = self.jwt_port.generate_token(user_id=user)
         self.email_port.get_email_adapter().send_email(
             subject="Login Successful",
             message="You have successfully logged in.",
             from_email="",
             recipient_list=[email]
         )
-        return user
+        return tokens
