@@ -5,4 +5,6 @@ from django.contrib.auth.models import (AbstractUser, BaseUserManager, Permissio
 # Create your models here.
 
 class User(AbstractUser):
-    pass
+    
+    designation = models.CharField(max_length=100, blank=True, null=True)
+    
