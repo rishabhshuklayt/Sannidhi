@@ -6,6 +6,7 @@ from .serializers.user_serializer import LoginSerializer, RegisterSerializer
 from .services.auth_services import AuthService
 from .repository.user_repository import UserRepository
 from core.factories.email_factories import EmailFactory
+from core.factories.jwtFactories.jwt_factories import JWTFactories
 class RegisterView(APIView):
 
     def post(self, request):
@@ -28,7 +29,8 @@ class RegisterView(APIView):
 
         service = AuthService(
             user_repository = UserRepository,
-            email_port = EmailFactory
+            email_port = EmailFactory,
+            jwt_port = JWTFactories.get_jwt_adapter()
         )
 
         user = service.register_user(username=username, email=email, password=password)
@@ -65,7 +67,8 @@ class LoginView(APIView):
         password = serializer.validated_data.get("password")
         service = AuthService(
             user_repository = UserRepository,
-            email_port = EmailFactory
+            email_port = EmailFactory,
+            jwt_port = JWTFactories.get_jwt_adapter()
         )
         
         user = service.login_user(email=email, password=password)
@@ -75,5 +78,7 @@ class LoginView(APIView):
                 "message": "Login failed"
             }, status=status.HTTP_400_BAD_REQUEST)
         return Response({
-            "message": "Login successful"
+            "message": "Login successful",
+            "access_token": user["access_token"],
+            "refresh_token": user["refresh_token"]
         }, status=status.HTTP_200_OK)    
