@@ -8,7 +8,7 @@ class UserRepository:
         ).first()
     
     def create_user(self, username: str, email: str, password: str):
-         return User.objects.create(
+         return User.objects.create_user(
             email=email,
             password=password,
             username=username
