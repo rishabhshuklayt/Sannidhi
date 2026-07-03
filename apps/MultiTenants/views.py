@@ -16,6 +16,11 @@ class CreateTenant(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=400)
         email = serializer.validated_data.get("email")
+        name = serializer.validated_data.get("name")
+        domain = serializer.validated_data.get("domain")
+        plan = serializer.validated_data.get("plan")
+        tenant_type = serializer.validated_data.get("tenant_type")
+
         
         # Perform tenant creation logic here
         return Response({"message": "Tenant created successfully."}, status=201)

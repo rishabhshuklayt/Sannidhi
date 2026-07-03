@@ -5,7 +5,7 @@ class CreateTenantSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
     domain = serializers.CharField(required=True, max_length=255)
     plan = serializers.CharField(required=True, max_length=100)
-    type = serializers.CharField(required=True, max_length=50)
+    tenant_type = serializers.CharField(required=True, max_length=50)
     metadata = serializers.JSONField(required=False, default=dict)
     private_metadata = serializers.JSONField(required=False, default=dict)
     is_active = serializers.BooleanField(required=False, default=True)
