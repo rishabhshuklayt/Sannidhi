@@ -7,6 +7,8 @@ class Tenants(models.Model):
     client_uuid = models.UUIDField(unique=True)
     email = models.EmailField(unique=True)
     metadata = models.JSONField(blank=True, null=True)
+    plan = models.CharField(max_length=100)
+    type = models.CharField(max_length=100)
     private_metadata = models.JSONField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_exempted = models.BooleanField(default=False)
