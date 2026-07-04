@@ -11,7 +11,7 @@ class tenantsServices:
         if existing_tenant:
             return Response({"error": "Tenant with the same email or domain already exists."}, status=400)  # i should use exception here instead of response but for now i will use response
         # Logic to create a new tenant
-        new_tenant = self.tenants_repository.create_tenant(
+        new_tenant = self.tenants_repository.create_tenant(self,
             name=name,
             tenant_type=tenant_type,
             plan=plan,
