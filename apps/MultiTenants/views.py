@@ -4,6 +4,9 @@ from apps.MultiTenants.services.tenants_services import tenantsServices
 from apps.MultiTenants.repository.tenants_repository import TenantsRepository
 
 from apps.MultiTenants.serializers.createTenantSerializer import CreateTenantSerializer
+import logging
+
+log = logging.getLogger(__name__)
 
 # Create your views here.
 
@@ -13,6 +16,7 @@ class CreateTenant(APIView):
     API view to create a new tenant.
     """
     def post(self, request, *args, **kwargs):
+        log.info("Received request to create a new tenant.")
         # Logic to create a new tenant goes here
         serializer = CreateTenantSerializer(data=request.data)
         if not serializer.is_valid():
