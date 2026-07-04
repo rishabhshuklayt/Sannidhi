@@ -1,5 +1,6 @@
 
 from apps.MultiTenants.models import Tenants
+from django.db.models import Q
 
 
 class TenantsRepository:
@@ -20,3 +21,9 @@ class TenantsRepository:
         is_exempted=is_exempted
       )
       return tenant
+    
+    def get_tenant_by_email_or_domain(self, email, domain):
+        
+        return Tenants.objects.filter(
+            Q(email=email) | Q(domain=domain)
+        ).first()

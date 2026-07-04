@@ -1,13 +1,17 @@
 
-
+from cross_web import Response
 class tenantsServices:
     def __init__(self, tenant_repository, email_factory):
         self.tenants_repository = tenant_repository
         self.EmailFactory = email_factory
 
     def create_tenants(self, name, tenant_type, plan , email, domain, metadata, private_metadata, is_active, is_exempted):
+        # checking existing tenant with the same email or domain
+        existing_tenant = self.tenants_repository.get_tenant_by_email_or_domain(email, domain)
+        if existing_tenant:
+            return Response({"error": "Tenant with the same email or domain already exists."}, status=400)  # i should use exception here instead of response but for now i will use response
         # Logic to create a new tenant
-        return self.tenants_repository.create_tenant(
+        new_tenant = self.tenants_repository.create_tenant(
             name=name,
             tenant_type=tenant_type,
             plan=plan,
@@ -18,9 +22,12 @@ class tenantsServices:
             is_active=is_active,
             is_exempted=is_exempted
         )
-
         
-        pass
+        #validating new tenant creation and sending email
+        if not new_tenant:
+            return None  
+        return new_tenant
+   
 
     def update_tenants(self, tenant_id, geofence_id, geofence_data):
         # Logic to update a specific geofence for the specified tenant
