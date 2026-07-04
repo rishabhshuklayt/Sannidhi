@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'apps.leaves',
     'apps.geofence',
     'apps.reports',
-    'apps.MultiTenants'
+    'apps.MultiTenants',
+    'apps.configurations'
     # 'apps.notifications',
 
 ]
