@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/accounts/', include('apps.accounts.urls')),
     path('api/v1/geofence/', include('apps.geofence.urls')),
+    path('api/v1/tenants/', include('apps.MultiTenants.urls'))
 ]
     
