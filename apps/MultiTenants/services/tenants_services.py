@@ -1,13 +1,13 @@
 
 from cross_web import Response
 class tenantsServices:
-    def __init__(self, tenant_repository, email_factory):
+    def __init__(self, tenant_repository):
         self.tenants_repository = tenant_repository
-        self.EmailFactory = email_factory
+        # self.EmailFactory = email_factory
 
-    def create_tenants(self, name, tenant_type, plan , email, domain, metadata, private_metadata, is_active, is_exempted):
+    def create_tenant(self, name, tenant_type, plan , email, domain, metadata, private_metadata, is_active, is_exempted):
         # checking existing tenant with the same email or domain
-        existing_tenant = self.tenants_repository.get_tenant_by_email_or_domain(email, domain)
+        existing_tenant = self.tenants_repository.get_tenant_by_email_or_domain(self ,email, domain)
         if existing_tenant:
             return Response({"error": "Tenant with the same email or domain already exists."}, status=400)  # i should use exception here instead of response but for now i will use response
         # Logic to create a new tenant
