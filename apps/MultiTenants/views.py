@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView, Response
 from apps.MultiTenants.services.tenants_services import tenantsServices
+from apps.MultiTenants.repository.tenants_repository import TenantsRepository
 
 from apps.MultiTenants.serializers.createTenantSerializer import CreateTenantSerializer
 
@@ -17,9 +18,12 @@ class CreateTenant(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=400)
        
-
+        services = tenantsServices(
+            tenant_repository = TenantsRepository
+            
+        )
         # send data to the service layer for tenant creation
-        tenant = tenantsServices.create_tenant(**serializer.validated_data)
+        tenant = services.create_tenant(**serializer.validated_data)
 
         # Perform tenant creation logic here
         return Response({"message": "Tenant created successfully."}, status=201)
