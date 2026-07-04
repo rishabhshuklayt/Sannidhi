@@ -1,10 +1,12 @@
+import uuid
+
 from django.db import models
 
 # Create your models here.
 class Tenants(models.Model):
     name = models.CharField(max_length=100)
     domain = models.CharField(max_length=100, unique=True)
-    client_uuid = models.UUIDField(unique=True)
+    client_uuid = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
     email = models.EmailField(unique=True)
     metadata = models.JSONField(blank=True, null=True)
     plan = models.CharField(max_length=100, null=True)
