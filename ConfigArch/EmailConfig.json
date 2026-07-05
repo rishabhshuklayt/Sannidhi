@@ -1,0 +1,19 @@
+{
+    "active_provider": "smtp",
+
+    "providers": {
+
+        "smtp": {
+            "host": "...",
+            "port": 587
+        },
+
+        "sendgrid": {
+            "api_key": "..."
+        },
+
+        "ses": {
+            "access_key": "..."
+        }
+    }
+}
