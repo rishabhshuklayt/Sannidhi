@@ -22,8 +22,8 @@ class TenantsRepository:
       )
       return tenant
     
-    def get_tenant_by_email_or_domain(self, email, domain):
-        
-        return Tenants.objects.filter(
-            Q(email=email) | Q(domain=domain)
-        ).first()
+    def get_tenant_by_email_or_domain_or_id(self, email, domain, id=None):
+        filters = Q(email=email) | Q(domain=domain)
+        if id is not None:
+            filters = filters | Q(id=id)
+        return Tenants.objects.filter(filters).first()
