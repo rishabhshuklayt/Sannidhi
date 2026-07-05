@@ -7,7 +7,7 @@ class tenantsServices:
 
     def create_tenant(self, name, tenant_type, plan , email, domain, metadata, private_metadata, is_active, is_exempted):
         # checking existing tenant with the same email or domain
-        existing_tenant = self.tenants_repository.get_tenant_by_email_or_domain(self ,email, domain)
+        existing_tenant = self.tenants_repository.get_tenant_by_email_or_domain_or_id(self ,email, domain)
         if existing_tenant:
             return Response({"error": "Tenant with the same email or domain already exists."})  # i should use exception here instead of response but for now i will use response
         # Logic to create a new tenant
@@ -38,5 +38,7 @@ class tenantsServices:
         pass
 
     def get_tenants(self, tenant_id):
-        # Logic to retrieve all geofences for the specified tenant
-        pass
+        tenant =  self.tenants_repository.get_tenant_by_email_or_domain_or_id(self , None, None, id=tenant_id)
+        if not tenant:
+            return Response({"error": "Tenant not found."}, status=404)
+        return tenant
