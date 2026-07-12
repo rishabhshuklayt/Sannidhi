@@ -81,4 +81,71 @@ class LoginView(APIView):
             "message": "Login successful",
             "access_token": user["access_token"],
             "refresh_token": user["refresh_token"]
-        }, status=status.HTTP_200_OK)    
+        }, status=status.HTTP_200_OK)   
+
+
+# class ProfileUpdateView(APIView):
+
+#     def put(self, request):
+#         if not request.method == "PUT":
+#             return Response({
+#                 "message": "Invalid request method"
+#             })
+#         serializer = RegisterSerializer(data=request.data)
+#         if not serializer.is_valid():
+#             return Response({
+#                 "message": "Invalid data provided"},
+#                 status=status.HTTP_400_BAD_REQUEST
+#             )
+#         email = serializer.validated_data.get("email")
+#         password = serializer.validated_data.get("password")
+#         username = serializer.validated_data.get("username")
+#         service = AuthService(
+#             user_repository = UserRepository,
+#             email_port = EmailFactory,
+#             jwt_port = JWTFactories.get_jwt_adapter()
+#         )
+        
+#         user = service.update_user_profile(email=email, password=password, username=username)
+
+#         if not user:
+#             return Response({
+#                 "message": "Profile update failed"
+#             }, status=status.HTTP_400_BAD_REQUEST)
+#         return Response({
+#             "message": "Profile updated successfully",
+#             "user": {
+#                 "email": user.email,
+#                 "username": user.username
+#             }
+#         }, status=status.HTTP_200_OK)     
+
+
+
+
+class ProfileUpdateView(APIView):
+
+    def put(self, request):
+
+        file = request.FILES.get("file")
+
+        if not file:
+            return Response(
+                {"message": "No file uploaded"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        print(file)
+        print(file.name)
+        print(file.size)
+        print(file.content_type)
+
+        return Response(
+            {
+                "message": "File received successfully",
+                "filename": file.name,
+                "size": file.size,
+                "content_type": file.content_type
+            },
+            status=status.HTTP_200_OK
+        )
