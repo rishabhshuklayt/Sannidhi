@@ -3,6 +3,8 @@ __pycache__/
 *.pyc
 db.sqlite3
 .env
+.env.stage
+.env.prod
 .media/
 staticfiles/
-ConfigArch
+# ConfigArch
